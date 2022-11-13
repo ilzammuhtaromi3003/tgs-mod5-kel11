@@ -11,6 +11,11 @@ const BASE_API_URL = `https://jsonplaceholder.typicode.com`;
 
 function App() {
   const [posts, setPosts] = useState([]);
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  
   useEffect(() => {
     const getPost = async () => {
       try {
@@ -28,13 +33,19 @@ function App() {
     <div className="app">
       <h1>Daftar Postingan</h1>
       <p>by Kelompok 11</p>
+      <Button className="mb-4" variant="primary" onClick={handleShow}>
+        Tambahkan postingan
+      </Button>
+      <AddPostComponent show={show} modal={handleClose} posts={posts} setPosts={setPosts} />
       {posts.map((post) => {
         return (
           <Card className="mb-3">
             <Card.Body key={post.id}>
               <Card.Title>{post.title}</Card.Title>
               <Card.Text>{post.body}</Card.Text>
-              <Button variant="danger">Delete</Button>
+              <Button variant="danger" onClick={() => deletePost(post.id)}>
+                Delete
+              </Button>
             </Card.Body>
           </Card>
         );
